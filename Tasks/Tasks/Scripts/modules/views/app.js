@@ -4,33 +4,73 @@ define([
 	'underscore',
 	'backbone',
     'mustache',
-    'text!templates/listTasks.html'
-], function ($, _, Backbone, Mustache, template) {
+    'collections/tasks',
+    'models/task',
+    'views/task',
+    'text!templates/stats.html'
+], function ($, _, Backbone, Mustache, Tasks, Task, TaskView, template) {
     'use strict';
 
-    // Our overall **AppView** is the top-level piece of UI.
     var AppView = Backbone.View.extend({
 
-        // Instead of generating a new element, bind to the existing skeleton of
-        // the App already present in the HTML.
-        el: '#todoapp',
+        el: '#taskapp',
 
-        // Delegated events for creating new items, and clearing completed ones.
         events: {
-            'keypress #new-todo': 'createOnEnter',
-            'click #clear-completed': 'clearCompleted',
-            'click #toggle-all': 'toggleAllComplete'
+            'submit #new-task-form': 'createOnEnter'
         },
 
-        // At initialization we bind to the relevant events on the `Todos`
-        // collection, when items are added or changed. Kick things off by
-        // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function () {
+
+            this.$newTaskInput = this.$("#new-task-title");
+
+            this.$footer = this.$('#footer');
+            this.$main = this.$('#main');
+
+            this.$waiting = this.$("#waiting-tasks>ul");
+            this.$active = this.$("#active-tasks>ul");
+            this.$finished = this.$("#finished-tasks>ul");
+
+            this.listenTo(Tasks, 'change', this.renderTask);
+            this.listenTo(Tasks, 'reset', this.renderTasks);
+            this.listenTo(Tasks, 'all', this.render);
+
+            Tasks.fetch({ reset: true });
         },
 
-        // Re-rendering the App just means refreshing the statistics -- the rest
-        // of the app doesn't change.
         render: function () {
+            this.$footer.html(Mustache.render(template, { count: Tasks.length }));
+            return this;
+        },
+
+        renderTask: function (task) {
+            var $container;
+            if (task.attributes.status == Task.STATUS_WAITING) {
+                $container = this.$waiting;
+            } else if (task.attributes.status == Task.STATUS_ACTIVE) {
+                $container = this.$active;
+            } else if (task.attributes.status == Task.STATUS_FINISHED) {
+                $container = this.$finished;
+            }
+
+            if (typeof $container != 'undefined') {
+                var view = new TaskView({ model: task });
+                $container.append(view.render().el);
+            }
+        },
+
+        renderTasks: function () {
+            _.each([this.$waiting, this.$active, this.$finished], function (i) { i.html(''); });
+            Tasks.each(this.renderTask, this);
+        },
+
+        createOnEnter: function ($event) {
+            console.log($event);
+            Tasks.create({
+                title: this.$newTaskInput.val(),
+                status: Task.STATUS_WAITING
+            });
+            this.$newTaskInput.val('');
+            return false;
         }
     });
 

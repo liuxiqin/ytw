@@ -4,37 +4,56 @@ define([
 	'underscore',
 	'backbone',
     'mustache',
+    'models/task',
     'text!templates/task.html'
-], function ($, _, Backbone, Mustache, taskTemplate) {
+], function ($, _, Backbone, Mustache, Task, taskTemplate) {
 	'use strict';
 
-	// Our overall **AppView** is the top-level piece of UI.
 	var AppView = Backbone.View.extend({
 		
+	    tagName: 'li',
+	    className: 'task',
+
 	    events: {
-	        'click .toggle': 'toggleCompleted',
-	        'dblclick label': 'edit',
-	        'click .destroy': 'clear',
-	        'keypress .edit': 'updateOnEnter',
-	        'blur .edit': 'close'
+	        'click .activate': 'onActivate',
+	        'click .close': 'onClose',
+            'click .remove': 'onRemove'
 	    },
 
-	    // The TodoView listens for changes to its model, re-rendering. Since there's
-	    // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-	    // app, we set a direct reference on the model for convenience.
 	    initialize: function () {
+
 	        this.listenTo(this.model, 'change', this.render);
-	        //this.listenTo(this.model, 'destroy', this.remove);
-	        //this.listenTo(this.model, 'visible', this.toggleVisible);
+	        this.listenTo(this.model, 'destroy', this.remove);
 	    },
 
-	    // Re-render the titles of the todo item.
+	    onActivate: function($event) {
+	        console.log($event);
+	        this.model.activate();
+	        this.remove();
+	    },
+
+	    onClose: function($event) {
+	        console.log($event);
+	        this.model.close();
+	        this.remove();
+	    },
+
+	    onRemove: function($event) {
+	        console.log($event);
+	        this.model.destroy();
+	        this.remove();
+	    },
+
 	    render: function () {
 
-	        this.$el.html(this.template(this.model.toJSON()));
-	        //this.$el.toggleClass('completed', this.model.get('completed'));
-	        //this.toggleVisible();
-	        //this.$input = this.$('.edit');
+	        this.$el.html(Mustache.render(taskTemplate, this.model.toJSON()));
+
+	        if (this.model.attributes.status == Task.STATUS_WAITING)
+	            this.$el.addClass('waiting');
+	        else if (this.model.attributes.status == Task.STATUS_ACTIVE)
+	            this.$el.addClass('active');
+	        else if (this.model.attributes.status == Task.STATUS_FINISHED)
+	            this.$el.addClass('closed');
 
 	        return this;
 	    },

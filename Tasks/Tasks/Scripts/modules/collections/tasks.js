@@ -13,5 +13,5 @@
         localStorage: new Store('tasks-backbone')
     });
 
-    return new TodosCollection();
+    return new TasksCollection();
 });

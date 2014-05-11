@@ -1,12 +1,12 @@
 ﻿define([
 	'jquery',
-	'backbone'
-], function ($, Backbone) {
+	'backbone',
+    'collections/tasks'
+], function ($, Backbone, Tasks) {
 	'use strict';
 
-	var TodoRouter = Backbone.Router.extend({
-		
+	var Router = Backbone.Router.extend({
 	});
 
-	return TodoRouter;
+	return Router;
 });

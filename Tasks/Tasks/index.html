@@ -3,20 +3,55 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Менеджер управления задачами</title>
+    <link href="css/site.css" rel="stylesheet" />
 </head>
-<body>
+<body id="taskapp">
 
-    <section id="todoapp">
-        <header></header>
-        <section id="main">
-            <input id="toggle-all" type="checkbox">
-            <label for="toggle-all">Mark all as complete</label>
-            <ul id="todo-list"></ul>
+    <header>
+        <h1>
+            Менеджер управления задачами
+        </h1>
+    </header>
+
+    <main id="main">
+
+        <section>
+            <form id="new-task-form">
+                <label for="new-task-title">Новая задача:</label> 
+                <input required="" type="text" id="new-task-title" placeholder="New task title" />
+            </form>
         </section>
-        <footer id="footer"></footer>
-    </section>
 
-    <script data-main="Scripts/modules/app" src="bower_components/requirejs/require.js"></script>
+        <section>
+            <div class="task-section" id="waiting-tasks">
+                <h3>
+                    В ожидании
+                </h3>
+                <ul></ul>
+            </div>
+            <div class="task-section" id="active-tasks">
+                <h3>
+                    Активные
+                </h3>
+                <ul></ul>
+            </div>
+            <div class="task-section" id="finished-tasks">
+                <h3>
+                    Завершенные
+                </h3>
+                <ul></ul>
+            </div>
+            <div class="clearfloat" />
+        </section>
+
+    </main>
+
+    <hr />
+    <footer id="footer">
+
+    </footer>
+
+    <script data-main="Scripts/modules/main.min" src="bower_components/requirejs/require.js"></script>
 </body>
 </html>

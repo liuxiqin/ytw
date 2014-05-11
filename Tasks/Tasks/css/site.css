@@ -1,0 +1,28 @@
+﻿#taskapp {
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.task-section {
+    width: 33%;
+    float: left;
+}
+.clearfloat {
+    clear: both;
+}
+
+ul {
+    padding: 0px;
+}
+.task {
+    list-style-type: none;
+}
+.task.waiting .close {
+    display: none;
+}
+.task.active .activate {
+    display: none;
+}
+.task.closed .close, .task.closed .activate  {
+    display: none;
+}
