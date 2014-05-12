@@ -19,7 +19,9 @@ require.config({
         mustache: "../../bower_components/mustache/mustache",
         text: '../../bower_components/requirejs-text/text'
     }
-}), require(["backbone", "views/app", "routers/router"], function (Backbone, MainApp, Router) {
+});
+require(["backbone", "views/app", "routers/router"], function (Backbone, MainApp, Router) {
+
     new Router();
     Backbone.history.start();
     return new MainApp();
