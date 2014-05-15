@@ -7,29 +7,17 @@
           src: {
               files: {
                   src: ['Gruntfile.js',
-                    'Scripts/modules/collections/*.js',
-                    'Scripts/modules/models/*.js',
-                    'Scripts/modules/routers/*.js',
-                    'Scripts/modules/views/*.js',
-                    'Scripts/modules/main.js']
+                    'app/collections/*.js',
+                    'app/models/*.js',
+                    'app/routers/*.js',
+                    'app/views/*.js',
+                    'app/main.js']
               }
           },
           test: {
-              files: { src: ['Scripts/modules/test/*Spec.js', 'gruntFile.js'] },
-              options: grunt.util._.extend({}, {
-                  node: true,
-                  globals: {
-                      angular: false,
-                      inject: false,
-                      jQuery: false,
-
-                      jasmine: false,
-                      afterEach: false,
-                      beforeEach: false,
-                      ddescribe: false,
-                      describe: false
-                  }
-              })
+              files: {
+                  src: ['test/**/*Spec.js', 'GruntFile.js']
+              }
           }, options: {
               node: true,
               globals: {
@@ -55,25 +43,25 @@
       requirejs: {
           compile: {
               options: {
-                  mainConfigFile: 'Scripts/modules/main.js',
-                  baseUrl: "Scripts/modules",
+                  mainConfigFile: 'app/main.js',
+                  baseUrl: "app",
                   name: "main",
                   include: ['main'],
-                  out: 'Scripts/modules/main.min.js'
+                  out: 'app/main.min.js'
               }
           }
       },
       karma: {
-          unit: { configFile: 'my.conf.js' },
-          server: { configFile: 'my.conf.js', background: true }
+          unit: { configFile: 'karma.conf.js' },
+          server: { configFile: 'karma.conf.js', background: true }
       },
       watch: {
           requirejs: {
-              files: ['Scripts/modules/*.js', 'Scripts/modules/**/*.js'],
+              files: ['app/*.js', 'app/**/*.js'],
               tasks: ['karma:server', 'requirejs']
           },
           test: {
-              files: ['Scripts/modules/test/*Spec.js'],
+              files: ['/test/*Spec.js', 'test/test-main.js', 'karma.conf.js'],
               tasks: ['jshint:test', 'karma:unit:run']
           },
           options: {

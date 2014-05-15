@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Mon May 12 2014 23:47:12 GMT+0300 (E. Europe Daylight Time)
+// Generated on Thu May 15 2014 17:21:59 GMT+0300 (Kaliningrad Standard Time)
 
 module.exports = function(config) {
   config.set({
@@ -15,14 +15,19 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test-main.js',
-      {pattern: 'Scripts/modules/**/*Spec.js', included: false}
+      'test/test-main.js',
+      { pattern: 'app/**/*.js', included: false},
+      { pattern: 'test/*Spec.js', included: false },
+
+      "bower_components/jquery/dist/jquery.min.js",
+      "bower_components/underscore/underscore.js",
+      "bower_components/requirejs/require.js",
     ],
 
 
     // list of files to exclude
     exclude: [
-      'Scripts/modules/main.min.js'
+      'app/main.js'
     ],
 
 
