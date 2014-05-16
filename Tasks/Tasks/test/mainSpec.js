@@ -1,15 +1,12 @@
-﻿define(['models/task', 'jquery', 'underscore'], function (Task, $, _) {
+﻿define(['jquery', 'underscore', 'views/task'], function ($, _, TaskView) {
 
-    describe('default values', function () {
+    describe('checking dependency', function () {
         'use strict';
 
-        it('works for title', function () {
+        it('works for application', function () {
 
-            var model = new Task();
-
-            expect(true).toBe(false);
-
-            expect(model.get('title')).toBe('');
+            var app = new TaskView();
+            app.render();
         });
     });
 });

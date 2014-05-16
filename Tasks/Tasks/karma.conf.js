@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu May 15 2014 17:21:59 GMT+0300 (Kaliningrad Standard Time)
+// Generated on Fri May 16 2014 15:16:37 GMT+0300 (Kaliningrad Standard Time)
 
 module.exports = function(config) {
   config.set({
@@ -15,13 +15,17 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/test-main.js',
       { pattern: 'app/**/*.js', included: false},
       { pattern: 'test/*Spec.js', included: false },
-
-      "bower_components/jquery/dist/jquery.min.js",
-      "bower_components/underscore/underscore.js",
-      "bower_components/requirejs/require.js",
+      { pattern: 'bower_components/backbone/backbone.js', included: false },
+      { pattern: 'bower_components/backbone.localStorage/backbone.localStorage.js', included: false },
+      { pattern: 'bower_components/mustache/mustache.js', included: false },
+      { pattern: 'bower_components/requirejs-text/text.js', included: false },
+      { pattern: 'app/templates/*', included: false },
+       "bower_components/jquery/dist/jquery.min.js",
+       "bower_components/requirejs/require.js",
+       "bower_components/underscore/underscore.js",
+      'test/test-main.js',
     ],
 
 

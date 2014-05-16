@@ -12,12 +12,12 @@ require.config({
         }
     },
     paths: {
-        jquery: "../../bower_components/jquery/dist/jquery.min",
-        underscore: "../../bower_components/underscore/underscore",
-        backbone: "../../bower_components/backbone/backbone",
-        backboneLocalstorage: "../../bower_components/backbone.localStorage/backbone.localStorage",
-        mustache: "../../bower_components/mustache/mustache",
-        text: '../../bower_components/requirejs-text/text'
+        jquery: "../bower_components/jquery/dist/jquery.min",
+        underscore: "../bower_components/underscore/underscore",
+        backbone: "../bower_components/backbone/backbone",
+        backboneLocalstorage: "../bower_components/backbone.localStorage/backbone.localStorage",
+        mustache: "../bower_components/mustache/mustache",
+        text: '../bower_components/requirejs-text/text'
     }
 });
 require(["backbone", "views/app", "routers/router"], function (Backbone, MainApp, Router) {

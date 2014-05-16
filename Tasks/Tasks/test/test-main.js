@@ -1,40 +1,40 @@
-var allTestFiles = [];
-var TEST_REGEXP = /(main-test|Spec)\.js$/;
-
-var pathToModule = function (path) {
-    return path.replace(/^\/base\//, '').replace(/\.js$/, '');
-};
-
-Object.keys(window.__karma__.files).forEach(function (file) {
-    if (TEST_REGEXP.test(file)) {
-        allTestFiles.push(pathToModule(file));
+var tests = [];
+for (var file in window.__karma__.files) {
+    if (/Spec\.js$/.test(file)) {
+        tests.push(file);
     }
-});
-
+}
 
 require.config({
-  // Karma serves files under /base, which is the basePath from your config file
+
   baseUrl: '/base/app',
-  
-  shim: {
-      underscore: {
-          exports: "_"
-      }, backbone: {
-          deps: ["underscore", "jquery"], exports: "Backbone"
-      }, backboneLocalstorage: {
-          deps: ["backbone"], exports: "Store"
-      }, mustache: {
-          exports: "Mustache"
-      }
-  },
+
+  //shim: {
+  //    underscore: {
+  //        exports: "_"
+  //    }, backbone: {
+  //        deps: ["underscore", "jquery"], exports: "Backbone"
+  //    }, backboneLocalstorage: {
+  //        deps: ["backbone"], exports: "Store"
+  //    }, mustache: {
+  //        exports: "Mustache"
+  //    }
+  //},
   paths: {
       jquery: "../bower_components/jquery/dist/jquery.min",
-      underscore: "../bower_components/underscore/underscore"
+      underscore: "../bower_components/underscore/underscore",
+      backbone: "../bower_components/backbone/backbone",
+      backboneLocalstorage: "../bower_components/backbone.localStorage/backbone.localStorage",
+      mustache: "../bower_components/mustache/mustache",
+      text: '../bower_components/requirejs-text/text'
   },
 
   // dynamically load all test files
-  deps: allTestFiles,
+  deps: tests,
 
   // we have to kickoff jasmine, as it is asynchronous
   callback: window.__karma__.start
+});
+
+require(["backbone"], function (Backbone) {
 });
