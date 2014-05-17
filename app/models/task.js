@@ -11,10 +11,13 @@
     };
 
     var Task = Backbone.Model.extend({
-
-        defaults: {
-            title: '',
-            status: constants.STATUS_WAITING
+        
+        defaults: function() {
+            return {
+                title: '',
+                status: constants.STATUS_WAITING,
+                createdDate: new Date(),
+            };
         },
         activate: function () {
             this.save({

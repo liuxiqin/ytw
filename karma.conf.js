@@ -1,3 +1,4 @@
+/// <reference path= />
 // Karma configuration
 // Generated on Fri May 16 2014 15:16:37 GMT+0300 (Kaliningrad Standard Time)
 
@@ -16,7 +17,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       { pattern: 'app/**/*.js', included: false},
-      { pattern: 'test/*Spec.js', included: false },
+      { pattern: 'test/**/*Spec.js', included: false },
       { pattern: 'bower_components/backbone/backbone.js', included: false },
       { pattern: 'bower_components/backbone.localStorage/backbone.localStorage.js', included: false },
       { pattern: 'bower_components/mustache/mustache.js', included: false },

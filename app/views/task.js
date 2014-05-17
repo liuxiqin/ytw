@@ -27,19 +27,16 @@ define([
 	    },
 
 	    onActivate: function($event) {
-	        console.log($event);
 	        this.model.activate();
 	        this.remove();
 	    },
 
 	    onClose: function($event) {
-	        console.log($event);
 	        this.model.close();
 	        this.remove();
 	    },
 
 	    onRemove: function($event) {
-	        console.log($event);
 	        this.model.destroy();
 	        this.remove();
 	    },

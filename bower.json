@@ -20,5 +20,8 @@
     "requirejs": "~2.1.11",
     "mustache": "~0.8.1",
     "requirejs-text": "~2.0.12"
+  },
+  "devDependencies": {
+    "jasmine": "~2.0.0"
   }
 }

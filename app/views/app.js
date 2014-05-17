@@ -43,6 +43,7 @@ define([
         },
 
         renderTask: function (task) {
+
             var $container;
             if (task.attributes.status == Task.STATUS_WAITING) {
                 $container = this.$waiting;
@@ -64,12 +65,12 @@ define([
         },
 
         createOnEnter: function ($event) {
-            console.log($event);
             Tasks.create({
                 title: this.$newTaskInput.val(),
                 status: Task.STATUS_WAITING
             });
             this.$newTaskInput.val('');
+            Tasks.fetch({ reset: true });
             return false;
         }
     });
