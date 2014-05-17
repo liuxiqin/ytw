@@ -28,44 +28,90 @@
           }
       },
       connect: {
-          server: {
+          release: {
               options: {
-                  port: 9001
+                  port: 9001,
+                  keepalive: true,
+                  base: "dist"
               }
           },
           serve: {
               options: {
                   port: 9001,
-                  keepalive: true
+                  keepalive: false
               }
           }
       },
       requirejs: {
-          compile: {
+          dist: {
               options: {
                   mainConfigFile: 'app/main.js',
                   baseUrl: "app",
                   name: "main",
                   include: ['main'],
-                  out: 'app/main.min.js'
+                  out: 'dist/app/main.min.js'
               }
           }
       },
       karma: {
           unit: { configFile: 'karma.conf.js' },
-          server: { configFile: 'karma.conf.js', background: true }
+          dist: { configFile: 'karma.conf.js', singleRun: true, }
       },
       watch: {
-          requirejs: {
-              files: ['app/*.js', 'app/**/*.js'],
-              tasks: ['karma:server', 'requirejs']
-          },
-          test: {
-              files: ['/test/*Spec.js', 'test/test-main.js', 'karma.conf.js'],
-              tasks: ['jshint:test', 'karma:unit:run']
+          serve: {
+              files: ['app/**/*.js', 'GruntFile.js'],
+              tasks: ['jshint:src']
           },
           options: {
               livereload: true,
+          }
+      },
+      clean: {
+          dist: ["dist"],
+          'after-dist': ["dist/css/*.css", "!dist/css/*.min.css"]
+      },
+      cssmin: {
+          dist: {
+              expand: true,
+              cwd: 'dist/css/',
+              src: ['*.css', '!*.min.css'],
+              dest: 'dist/css/',
+              ext: '.min.css'
+          }
+      },
+      htmlmin: {                                    
+          dist: {                                     
+              options: {                                 
+                  removeComments: true,
+                  collapseWhitespace: true
+              },
+              files: {                                   
+                  'dist/index.html': 'index.html'
+              }
+          },
+      },
+      copy: {
+          dist: {
+              files: [
+                { expand: true, src: ['css/**'], dest: 'dist' },
+                { src: "bower_components/requirejs/require.js", dest: 'dist/app/lib/require.js' }
+              ]
+          }
+      },
+      replace: {
+          dist: {
+              src: ['dist/index.html'],
+              overwrite: true,                 // overwrite matched source files
+              replacements: [{
+                  from: "css/site.css",
+                  to: "css/site.min.css"
+              }, {
+                  from: "bower_components/requirejs/require.js",
+                  to: "app/lib/require.js"
+              }, {
+                  from: "app/main",
+                  to: "app/main.min"
+              }]
           }
       }
   });
@@ -75,8 +121,17 @@
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-text-replace');
 
   grunt.registerTask('default', ['jshint:test', 'karma:unit']);
-  grunt.registerTask('serve', ['jshint:src', 'connect:serve']);
-  //grunt.registerTask('build', ['jshint:src', 'karma:server', 'requirejs', 'connect:server', 'watch:requirejs']);
+  grunt.registerTask('serve', ['jshint:src', 'connect:serve', 'watch:serve']);
+
+  grunt.registerTask('dist', ['jshint:src', 'karma:dist', 'clean:dist', 'requirejs:dist', 'copy:dist', 'cssmin:dist', 'htmlmin:dist',
+      'replace:dist', 'clean:after-dist']);
+
+  grunt.registerTask('dist-serve', ['dist', 'connect:release']);  
 };

@@ -20,4 +20,14 @@ Integration of Backbone, RequireJS, Karma, Jasmine, Mustache
 	
 ### Serve
 
+dev local server 
+
 	grunt serve
+
+## Building
+
+	grunt dist
+
+### Running release version
+
+	grunt dist-serve
